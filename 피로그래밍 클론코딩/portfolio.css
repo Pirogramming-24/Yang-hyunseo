@@ -1,0 +1,232 @@
+*{
+    background-color: black;
+    color: white;
+}
+
+.page-container{
+    max-width: 1200px;      /* 기준 폭 */
+    margin: 0 auto;         /* 가운데 정렬 */
+    padding: 0 24px;        /* 최소 여백 */
+}
+
+
+ul{
+    list-style-type: none;
+}
+
+
+
+.menu ul{
+    display: grid;
+    grid-template-columns: repeat(6, auto);
+    gap: 24px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.menu li{
+    font-size: 1.3rem;
+    font-weight: 320;
+    cursor: pointer;
+}
+
+
+
+.menu li:hover{
+    transform: translateY(-2px);
+    cursor: pointer;
+    color: greenyellow;
+}
+
+.header-container > div{
+    display: flex;
+    align-items: center;     
+    justify-content: space-between; 
+    padding: 0 24px;
+}
+
+#cardinalNum{
+    font-weight: 400;
+}
+
+.team-item{
+    display: grid;
+    position: relative;
+    grid-template-columns: auto 2fr;
+    align-items: start;
+    column-gap: 100px;
+    background-color: #3a3a3a;
+    border-radius: 10px;
+    padding: 20px;
+    gap: 2px;
+    margin: 2cap;
+}
+
+.team-item *{
+    background-color: #3a3a3a;
+}
+
+.team-item:hover{
+    transform: translateY(-2px);
+
+}
+
+.projectImage{
+    width: 150px;
+    height: 110px;
+    background-color: white;
+    overflow: hidden;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 16px;
+}
+
+.projectImage > img{
+    width: 100%;
+    background-color: white;
+    object-fit: contain;
+    transition: 0.3s;
+    padding: 1rem 2rem;
+
+
+}
+
+.team-item:hover .projectImage > img{
+    transform: scale(1.1);
+}
+
+.projectTextInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px 0;
+    
+
+}
+
+.projectName{
+    display: flex;
+    align-items: center;         
+    justify-content: space-between; 
+}
+
+
+.projectName h2{
+    margin: 0;
+    font-weight: 470;
+}
+
+.hamburger{
+    position: absolute;
+    top: 16px;
+    right: 16px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+
+.hamburger span{
+    display: block;
+    width: 20px;
+    height: 2px;
+    background-color: white; 
+    transition: transform 0.2s ease;
+}
+
+.team-item:hover .hamburger span:nth-child(1){
+    transform-origin: left;
+    transform: scaleX(0.7);
+}
+
+.team-item:hover .hamburger span:nth-child(3){
+    transform-origin: right;
+    transform: scaleX(0.7);
+}
+
+
+.projectDesc p{
+    margin: 1px 0 16px;
+}
+
+
+.member{
+    display: grid;
+    grid-template-columns: repeat(5, auto); /* 고정 폭 5칸 */
+    column-gap: 8px;                         /* 이름 간 간격 */
+    row-gap: 6px;
+    justify-content: start;              
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.member li{
+    width: 55px;
+    padding: 6px 10px;
+    text-align: center;
+    border-radius: 3px;
+    white-space: nowrap;
+}
+
+.teamLeaderName{
+    background-color: #2188b6;
+}
+
+.teamMemberName{
+    background-color: lightgray;
+    color: black;
+}
+
+
+
+.projectDesc{
+    color: #c6c6c6;
+}
+
+@media (max-width: 715px){
+    .team-item{
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto; 
+    }
+
+    .projectImage{
+        justify-self: center; /* 선택: 이미지 가운데 */
+    }
+
+    /*
+    .projectImage img{
+        max-width: 220px; 
+    }
+    */
+}
+
+
+
+@media(max-width: 542px){
+    .member{
+        grid-template-columns: repeat(3, 1fr); /*창 크기 줄어들면 5명에서 3명으로*/
+    }
+}
+
+@media(max-width: 715px){
+    .menu{
+        display: none;
+    }
+    .projectName{
+        justify-content: center; 
+    }
+    .projectName h2,
+    .projectDesc{
+        text-align: center;
+    }
+
+    .member{
+        justify-content: center;
+    }
+}
