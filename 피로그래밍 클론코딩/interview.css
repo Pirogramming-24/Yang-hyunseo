@@ -3,10 +3,15 @@
     color: white;
 }
 
+body{
+    margin: 0;
+}
+
 .page-container{
-    max-width: 1200px;      /* 기준 폭 */
-    margin: 0 auto;         /* 가운데 정렬 */
-    padding: 0 24px;        /* 최소 여백 */
+    max-width: 1200px;    
+    margin: 0 auto;         
+    padding: 0 24px;       
+    margin-bottom: 100px;
 }
 
 ul{
@@ -198,7 +203,120 @@ ul{
     width: auto;
 }
 
+.footer{
+    display: block;
+    color: white;
+    background-color: coral;
+    width: 100%;
+    margin: 0px 0px;
 
+    
+}
+.footer-top *{
+    background-color: #3a3a3a;
+}
+
+.footer-top{
+    display: flex;         
+    justify-content: space-between;
+    align-items: center;  
+
+    padding: 20px 160px;
+    height: 230px;
+    background-color: #3a3a3a;
+    margin: 0;
+    overflow: hidden;
+}
+
+
+
+.footer-top .sns{
+    display: flex;
+    justify-content: flex-start;;
+    align-items: center;
+    align-content: center;
+
+    text-align: center;
+}
+.circle{
+    width: 37px;
+    height: 37px;
+    background-color: black;
+    border-radius: 50%;
+
+    margin: 10px;
+
+
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+
+    font-size: small;
+}
+
+
+.footer-top .email{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-top .basicInfo .p{
+    font-weight: 100;
+}
+
+.footer-top .email .p{
+    font-weight: 100;
+}
+
+.footMenu{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+    
+}
+
+.footMenu>div{
+    font-size: 17px;
+    font-weight: 150;
+}
+
+.footMenu>div:hover, .footer-top .basicInfo>p:hover, .basicInfo .sns .circle:hover, .basicInfo>.email:hover{
+    transform: translateY(-2px);
+    cursor: pointer;
+}
+
+.footer-bottom *{
+    background-color: #262626;
+}
+
+.footer-bottom{
+    background-color: #262626;
+    margin: 0px 0px;
+    padding: 7px 0px;
+    
+    text-align: center;
+    align-content: center;
+
+    height: 30px;
+}
+
+
+
+.footer-top h3,
+.footer-top p,
+.footer-bottom p{
+    margin: 0;
+}
+
+
+@media(max-width: 940px){
+    .footer-top{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
 
 @media(max-width: 850px){
@@ -219,3 +337,4 @@ ul{
         grid-template-columns: repeat(1, 1fr);
     }
 }
+
