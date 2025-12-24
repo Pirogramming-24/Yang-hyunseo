@@ -34,6 +34,16 @@
     padding: 10px 20px; border-radius: 5px;
 
 }
+
+#login #login_frm fieldset .bottom #next_btn:hover{
+    border: 1px solid #aaa;
+    background-color: #1a73e8;
+    color: white;
+    
+    padding: 10px 20px; border-radius: 5px;
+
+}
+
 #login footer{
     margin-top: 100px;
     display: flex;
