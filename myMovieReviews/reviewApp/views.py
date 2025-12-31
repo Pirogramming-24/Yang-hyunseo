@@ -19,8 +19,13 @@ def reviews_list(request) :
 
 def reviews_read(request, pk):  
   review = Post.objects.get(id=pk) # DB에서 id가 pk인 게시글 하나 조회
+  
+  hours = review.running_time // 60
+  minutes = review.running_time % 60
   context = {
-    "review" : review
+    "review" : review,
+    "hours" : hours,
+    "minutes" : minutes,
   }
   return render(request, "reviews_read.html", context)
 

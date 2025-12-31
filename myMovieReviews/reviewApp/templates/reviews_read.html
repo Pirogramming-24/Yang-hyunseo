@@ -16,7 +16,7 @@
     <p class="card-text">
       <strong>감독:</strong> {{ review.director_name }} <br>
       <strong>주연:</strong> {{ review.main_actor }} <br>
-      <strong>러닝타임:</strong> {{ review.running_time }}분 <br>
+      <strong>러닝타임:</strong> {{ hours }}시간 {{ minutes }}시간 <br>
       <strong>평점:</strong> ⭐ {{ review.rating }} / 5.0
     </p>
 
@@ -31,7 +31,7 @@
 
 <div class="mt-3">
   <a href="{% url 'reviewApp:reviews_list' %}" class="btn btn-secondary">
-    목록으로
+    myMovieReviews
   </a>
   <a href="{% url 'reviewApp:update' review.id %}" class="edit-link">✏️ 수정</a>
         <form action="{% url 'reviewApp:delete' review.id %}" method="post" style="display:inline;">
