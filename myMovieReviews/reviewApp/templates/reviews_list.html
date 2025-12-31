@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3 class="mb-4">나의 리뷰</h3>
+
+<a href="{% url 'reviewApp:create' %}" class="btn btn-primary mb-4">
+  리뷰 작성하기
+</a>
+
+<div class="review-list">
+  {% for review in reviews %}
+    <a href="{% url 'reviewApp:read' review.id %}" class="review-card-link">
+      <div class="review-card">
+        <div class="review-card-body">
+          <h5 class="review-title">
+            {{ review.movie_title }}
+          </h5>
+
+          <p class="review-meta">
+            🎬 {{ review.release_year }} · {{ review.genre }}
+          </p>
+
+          <p class="review-rating">
+            ⭐ {{ review.rating }} / 5.0
+          </p>
+
+          
+        </div>
+      </div>
+    </a>
+  {% empty %}
+    <p>아직 작성된 리뷰가 없습니다.</p>
+  {% endfor %}
+</div>
+
+{% endblock content %}

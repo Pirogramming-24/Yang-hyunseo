@@ -1,0 +1,52 @@
+.review-form-wrapper {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #f5f6f8;   /* 옅은 회색 */
+  border-radius: 14px;        /* 약간 둥글게 */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.form-title {
+  text-align: center;
+  margin-bottom: 24px;
+  font-weight: 700;
+}
+
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.review-form input,
+.review-form textarea {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: #ffffff;  /* 입력칸 흰색 */
+  font-size: 0.95rem;
+}
+
+.review-form input:focus,
+.review-form textarea:focus {
+  outline: none;
+  border-color: #6c757d;
+  box-shadow: 0 0 0 2px rgba(108, 117, 125, 0.15);
+}
+
+.submit-btn {
+  margin-top: 10px;
+  padding: 12px;
+  border: none;
+  border-radius: 24px;
+  background-color: #212529;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.submit-btn:hover {
+  background-color: #000000;
+}

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="review-form-wrapper">
+  <h1 class="form-title">리뷰 수정하기</h1>
+
+  <form action="{% url 'reviewApp:update' review.id %}" method="post" class="review-form">
+    {% csrf_token %}
+
+    <input
+      type="text"
+      name="movie_title"
+      placeholder="영화 제목"
+      value="{{ review.movie_title }}"
+      required
+    />
+
+    <input
+      type="text"
+      name="release_year"
+      placeholder="개봉 연도"
+      value="{{ review.release_year }}"
+      required
+    />
+
+    <input
+      type="text"
+      name="director_name"
+      placeholder="감독 이름"
+      value="{{ review.director_name }}"
+      required
+    />
+
+    <input
+      type="text"
+      name="main_actor"
+      placeholder="주연 배우"
+      value="{{ review.main_actor }}"
+      required
+    />
+
+    <input
+      type="text"
+      name="genre"
+      placeholder="장르"
+      value="{{ review.genre }}"
+      required
+    />
+
+    <input
+      type="number"
+      name="rating"
+      min="0"
+      max="5"
+      step="0.1"
+      value="{{ review.rating }}"
+      required
+    />
+
+    <input
+      type="number"
+      name="running_time"
+      min="1"
+      value="{{ review.running_time }}"
+      required
+    />
+
+    <textarea
+      name="review_content"
+      rows="8"
+      placeholder="리뷰 내용을 작성하세요"
+      required
+    >{{ review.review_content }}</textarea>
+
+    <button type="submit" class="submit-btn">수정완료</button>
+  </form>
+</div>
+
+{% endblock content %}
