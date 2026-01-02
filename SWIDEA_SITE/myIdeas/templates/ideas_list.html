@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="header">
+  <h3 class="mb-3">🛠️ My SW Idea Manage</h3>
+
+  <a href="{% url 'myIdeas:ideas_create' %}" class="btn idea_create_btn">
+    아이디어 등록
+  </a>
+  <span class="header-divider">|</span>
+  <a href="{% url 'myIdeas:ideas_list' %}" class="btn idea_update_btn" style="color: rgb(86, 146, 249);">
+    아이디어 관리
+  </a>
+  <span class="header-divider">|</span>
+  <a href="{% url 'myIdeas:devtool_create' %}" class="btn devtool_create_btn">
+    개발툴 등록
+  </a>
+  <span class="header-divider">|</span>
+  <a href="{% url 'myIdeas:devtool_list' %}" class="btn devtool_update_btn">
+    개발툴 관리
+  </a>
+</div>
+
+
+<div class="sort-bar">
+  <form method="get">
+    <select name="sort" class="sort-select" onchange="this.form.submit()">
+      <option value="">정렬 기준</option>
+      <option value="latest" {% if request.GET.sort == "latest" %}selected{% endif %}>
+        최신순
+      </option>
+      <option value="name" {% if request.GET.sort == "name" %}selected{% endif %}>
+        이름순
+      </option>
+      <option value="interest" {% if request.GET.sort == "interest" %}selected{% endif %}>
+        관심도순
+      </option>
+      <option value="star" {% if request.GET.sort == "star" %}selected{% endif %}>
+        찜하기순
+      </option>
+    </select>
+  </form>
+</div>
+
+
+
+
+<div class="idea-grid">
+  {% for idea in ideas %}
+    <div class="idea-card">
+      
+
+        <div class="idea-thumb">  
+
+          <button class="star-btn" data-id="{{ idea.id }}">
+            <svg class="star-icon" viewBox="0 0 24 24">
+              <path d="M12 17.3l6.18 3.7-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+            </svg>
+          </button>
+
+
+
+
+          {% if idea.image %}
+            <img src="{{ idea.image.url }}" alt="썸네일">
+          {% endif %}
+        </div>
+
+        <div class="idea-body">
+          <a href="{% url 'myIdeas:ideas_read' idea.id %}" class="idea-link">
+          <h5 class="idea-title">
+            {{ idea.title }}
+          </h5>
+          </a>
+
+          <p class="idea-devtool">
+            🛠 개발툴: {{ idea.devtool.name }}
+          </p>
+
+          <div class="interest-box">
+            <button class="interest-btn" data-id="{{ idea.id }}" data-delta="-1">−</button>
+            <span class="interest-value">{{ idea.interest }}</span>
+            <button class="interest-btn" data-id="{{ idea.id }}" data-delta="1">+</button>
+          </div>
+
+
+        </div>
+
+      
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock content %}

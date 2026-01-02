@@ -1,0 +1,83 @@
+.star-btn {
+  position: absolute;  
+  top: 8px;
+  right: 8px;
+  z-index: 10; 
+  color: pink;
+  transition: color 0.2s;
+}
+
+.star-icon {
+  width: 20px;
+  height: 20px;
+  fill: #bbb;
+}
+
+.star-btn.active .star-icon {
+  fill: gold;
+}
+
+
+.idea-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.idea-card {
+  background-color: #f5f5f5;
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.idea-title:hover {
+  color: rgb(86, 146, 249);
+}
+
+.idea-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.idea-thumb {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  background-color: #ddd;
+  overflow: hidden;
+}
+
+.idea-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.idea-body {
+  padding: 12px 14px;
+}
+
+.idea-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.idea-devtool,
+.idea-interest {
+  font-size: 14px;
+  margin: 4px 0;
+  color: #444;
+}
+
+.sort-bar {
+  margin-bottom: 20px;
+}
+
+.sort-select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  cursor: pointer;
+}

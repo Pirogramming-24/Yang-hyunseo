@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="header">
+  <h3 class="mb-3">🛠️ My SW Idea Manage</h3>
+
+  <a href="{% url 'myIdeas:ideas_create' %}" class="btn idea_create_btn">
+    아이디어 등록
+  </a>
+  <span class="header-divider">|</span>
+  <a href="{% url 'myIdeas:ideas_list' %}" class="btn idea_update_btn">
+    아이디어 관리
+  </a>
+  <span class="header-divider">|</span>
+  <a href="{% url 'myIdeas:devtool_create' %}" class="btn devtool_create_btn">
+    개발툴 등록
+  </a>
+  <span class="header-divider">|</span>
+  <a href="{% url 'myIdeas:devtool_list' %}" class="btn devtool_update_btn">
+    개발툴 관리
+  </a>
+</div>
+
+<h1>아이디어 수정</h1>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  {{ form.as_p }}
+
+  <div class="bottom-links">
+    <button type="submit" class="edit-link">수정 완료</button>
+    <a href="{% url 'myIdeas:devtool_read' devtool.id %}" class="back-link">
+      취소
+    </a>
+  </div>
+</form>
+
+{% endblock %}

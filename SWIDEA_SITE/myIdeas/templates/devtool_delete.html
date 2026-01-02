@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>개발툴 삭제</h2>
+<hr>
+
+<p>
+  정말로 아래 아이디어를 삭제하시겠습니까?
+</p>
+
+<div class="devtool-card">
+  <strong>{{ devtool.name }}</strong><br>
+</div>
+
+<form method="post">
+  {% csrf_token %}
+
+  <div class="bottom-links">
+    <button type="submit" class="delete-link">
+      🗑 삭제
+    </button>
+
+    <a href="{% url 'myIdeas:devtool_read' devtool.id %}" class="back-link">
+      취소
+    </a>
+  </div>
+</form>
+
+
+{% endblock %}

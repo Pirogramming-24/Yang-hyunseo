@@ -1,0 +1,59 @@
+/* 전체 래퍼 */
+.devtool-list-wrapper {
+  margin-top: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #dee2e6;
+}
+
+/* 헤더 */
+.devtool-list-header {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 4fr;
+  padding: 14px 20px;
+  background-color: #f8f9fa;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* 각 행 */
+.devtool-list-row {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 4fr;
+  padding: 14px 20px;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid #f1f3f5;
+  transition: background-color 0.15s ease;
+}
+
+/* hover */
+.devtool-list-row:hover {
+  background-color: #f1f3f5;
+}
+
+/* 컬럼 공통 */
+.devtool-list-row span,
+.devtool-list-header span {
+  font-size: 0.9rem;
+}
+
+/* 타입 강조 */
+.col-type {
+  font-weight: 600;
+  color: #495057;
+}
+
+/* 설명 말줄임 */
+.col-explain {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #495057;
+}
+
+/* 마지막 줄 테두리 제거 */
+.devtool-list-row:last-child {
+  border-bottom: none;
+}

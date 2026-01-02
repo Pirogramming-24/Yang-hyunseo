@@ -1,0 +1,37 @@
+body{
+    width: 100%;
+    margin: 0 0;
+    padding: 0 0;
+}
+
+.header{
+  background-color: #444;
+  margin: 0 0;
+  width: 100%; padding: 20px;
+
+}
+
+.header h3 {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.header-divider{
+    color: #ffffff;
+}
+
+/* 상단 버튼들 */
+.header .btn {
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+/* 버튼 컬러 커스터마이징 */
+.idea_create_btn, .idea_update_btn, .devtool_create_btn, .devtool_update_btn {
+  color: #ffffff;
+}
+
+.idea_create_btn:hover, .idea_update_btn:hover, .devtool_create_btn:hover, .devtool_update_btn:hover {
+    cursor: pointer;
+    color: rgb(86, 146, 249);
+}
