@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="header">
+  <h3 class="mb-3">🛠️ My SW Idea Manage</h3>
+
+  <a href="{% url 'myIdeas:ideas_create' %}" class="btn idea_create_btn">아이디어 등록</a>
+  <span class="header-divider">|</span>
+  <a href="{% url 'myIdeas:ideas_list' %}" class="btn idea_update_btn">아이디어 관리</a>
+  <span class="header-divider">|</span>
+  <a href="{% url 'myIdeas:devtool_create' %}" class="btn devtool_create_btn">개발툴 등록</a>
+  <span class="header-divider">|</span>
+  <a href="{% url 'myIdeas:devtool_list' %}" class="btn devtool_update_btn" style="color: rgb(86, 146, 249);">
+    개발툴 관리
+  </a>
+</div>
+
+<hr>
+
+<h2>DevTool Detail</h2>
+
+<!-- 개발툴 정보 카드 -->
+<div class="card mt-3">
+  <div class="card-body">
+    <h4 class="card-title">{{ devtool.name }}</h4>
+
+    <p class="card-text">
+      <strong>종류 :</strong> {{ devtool.type }}
+    </p>
+
+    <p class="card-text">
+      <strong>설명 :</strong><br>
+      {{ devtool.explain|linebreaks }}
+    </p>
+  </div>
+</div>
+
+<hr>
+
+<!-- 이 개발툴을 사용하는 아이디어 목록 -->
+<h4>이 개발툴로 만들 수 있는 SW</h4>
+
+{% if ideas %}
+  <ul class="list-group mt-3">
+    {% for idea in ideas %}
+      <li class="list-group-item">
+        <a href="{% url 'myIdeas:ideas_read' idea.id %}">
+          {{ idea.title }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p class="text-muted mt-3">
+    아직 이 개발툴을 사용하는 아이디어가 없습니다.
+  </p>
+{% endif %}
+
+<hr>
+
+<!-- 하단 버튼 영역 -->
+<div class="d-flex justify-content-between mt-4">
+  <a href="{% url 'myIdeas:devtool_list' %}" class="btn btn-secondary">
+    목록
+  </a>
+
+  <div>
+    <a href="{% url 'myIdeas:devtool_update' devtool.id %}" class="btn btn-primary">
+      수정
+    </a>
+
+    <a href="{% url 'myIdeas:devtool_update' devtool.id %}"
+       class="btn btn-danger"
+       onclick="return confirm('정말 삭제하시겠습니까?');">
+      삭제
+    </a>
+  </div>
+</div>
+
+{% endblock %}

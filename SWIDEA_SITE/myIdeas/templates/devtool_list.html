@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="header">
+  <h3 class="mb-3">🛠️ My SW Idea Manage</h3>
+
+  <a href="{% url 'myIdeas:ideas_create' %}" class="btn idea_create_btn">
+    아이디어 등록
+  </a>
+  <span class="header-divider">|</span>
+  <a href="{% url 'myIdeas:ideas_list' %}" class="btn idea_update_btn" >
+    아이디어 관리
+  </a>
+  <span class="header-divider">|</span>
+  <a href="{% url 'myIdeas:devtool_create' %}" class="btn devtool_create_btn">
+    개발툴 등록
+  </a>
+  <span class="header-divider">|</span>
+  <a href="{% url 'myIdeas:devtool_list' %}" class="btn devtool_update_btn" style="color: rgb(86, 146, 249);">
+    개발툴 관리
+  </a>
+</div>
+
+<!-- devtool list 전용 -->
+<div class="devtool-list-wrapper">
+
+  <!-- 헤더 행 -->
+  <div class="devtool-list-header">
+    <span class="col-name">이름</span>
+    <span class="col-type">타입</span>
+    <span class="col-explain">설명</span>
+  </div>
+
+  {% for devtool in devtools %}
+    <a href="{% url 'myIdeas:devtool_read' devtool.id %}"
+       class="devtool-list-row">
+
+      <span class="col-name">{{ devtool.name }}</span>
+      <span class="col-type">{{ devtool.type }}</span>
+      <span class="col-explain">{{ devtool.explain }}</span>
+
+    </a>
+  {% endfor %}
+
+</div>
+
+{% endblock content %}
