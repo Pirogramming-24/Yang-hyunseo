@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3 class="mb-4" >나의 리뷰</h3>
+<div class="search_bar mb-4">
+  {% comment %} <form id="searchForm" onsubmit="return false;">
+    <input
+      type="text"
+      id="searchInput"
+      class="form-control"
+      placeholder="영화 제목으로 검색"
+    />
+  </form> {% endcomment %}
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="검색" class="btn btn-primary btn-sm">
+  </form>
+
+</div>
+
+<div class="mb-3">
+  <strong>정렬:</strong>
+  <a href="?sort=latest" class="{% if sort == 'latest' %}fw-bold{% endif %}">최신순</a> |
+  <a href="?sort=rating" class="{% if sort == 'rating' %}fw-bold{% endif %}">평점순</a> |
+  <a href="?sort=title" class="{% if sort == 'title' %}fw-bold{% endif %}">제목순</a>
+</div>
+
+
+<a href="{% url 'reviewApp:create' %}" class="btn btn-primary mb-4">
+  리뷰 작성하기
+</a>
+
+<a href="{% url 'reviewApp:chatbot' %}" class="btn btn-primary mb-4">
+  챗봇
+</a>
+
+<div class="review-list">
+  {% for review in reviews %}
+    <a href="{% url 'reviewApp:read' review.id %}" class="review-card-link">
+
+      <div class="review-card d-flex gap-3">
+
+        <!-- 포스터 -->
+        {% if review.movie_poster %}
+          <img
+            src="{{ review.movie_poster }}"
+            alt="{{ review.movie_title }}"
+            style="width: 90px; height: auto; border-radius: 6px;"
+          />
+        {% endif %}
+
+        <!-- 텍스트 영역 -->
+        <div class="review-card-body">
+          <h5 class="review-title">
+            {{ review.movie_title }}
+          </h5>
+
+          <p class="review-meta">
+            🎬 {{ review.release_year }} · {{ review.genre }}
+          </p>
+
+          <p class="review-rating">
+            ⭐ {{ review.rating }} / 5.0
+          </p>
+        </div>
+
+      </div>
+    </a>
+  {% empty %}
+    <p>아직 작성된 리뷰가 없습니다.</p>
+  {% endfor %}
+</div>
+
+<nav aria-label="Page navigation">
+  <ul class="pagination justify-content-center mt-4">
+
+    {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}&sort={{ sort }}">이전</a>
+      </li>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+      <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+        <a class="page-link" href="?page={{ num }}&sort={{ sort }}">
+          {{ num }}
+        </a>
+      </li>
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}&sort={{ sort }}">다음</a>
+      </li>
+    {% endif %}
+
+  </ul>
+</nav>
+
+
+
+{% endblock content %}
