@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="mt-4">영화 리뷰 상세</h2>
+<hr>
+
+<div class="card">
+  <div class="card-body">
+
+    <h4 class="card-title">{{ review.movie_title }}</h4>
+    <h6 class="card-subtitle mb-2 text-muted">
+      {{ review.release_year }} · {{ review.genre }}
+    </h6>
+    
+    <div class="movieImage">
+    {% if review.movie_poster %}
+      <img
+        src="{{ review.movie_poster }}"
+        alt="{{ review.movie_title }}"
+        style="width: 90px; height: auto; border-radius: 6px;"
+      />
+    {% endif %}
+    </div>
+
+    <p class="card-text">
+      <strong>감독:</strong> {{ review.director_name }} <br>
+      <strong>주연:</strong> {{ review.main_actor }} <br>
+      <strong>장르:</strong> {{ review.genre }} <br>
+      <strong>러닝타임:</strong> {{ hours }}시간 {{ minutes }}시간 <br>
+      <strong>평점:</strong> ⭐ {{ review.rating }} / 5.0
+    </p>
+
+    <hr>
+
+    <p>
+      {{ review.review_content|linebreaks }}
+    </p>
+
+  </div>
+</div>
+
+<div class="mt-3">
+  <a href="{% url 'reviewApp:reviews_list' %}" class="btn btn-secondary">
+    myMovieReviews
+  </a>
+  <a href="{% url 'reviewApp:update' review.id %}" class="edit-link">✏️ 수정</a>
+        <form action="{% url 'reviewApp:delete' review.id %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="delete-link">🗑 삭제</button>
+        </form>
+
+</div>
+
+{% endblock %}
