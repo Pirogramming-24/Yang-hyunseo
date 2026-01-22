@@ -1,0 +1,42 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+.container {
+    display: flex;
+    height: 100vh;
+}
+/* 왼쪽 사이드바 */
+.sidebar {
+    width: 220px;
+    background-color: #1e1e2f;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.sidebar h2 {
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-size: 20px;
+    text-align: center;
+}
+.sidebar a {
+    display: block;
+    padding: 12px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: white;
+    background-color: #2e2e42;
+    border-radius: 6px;
+    text-align: center;
+}
+.sidebar a:hover {
+    background-color: #4a4a6a;
+}
+
+/* 오른쪽 메인 영역 */
+.content {
+    flex: 1;
+    padding: 40px;
+    box-sizing: border-box;
+}

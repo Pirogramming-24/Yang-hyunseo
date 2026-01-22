@@ -1,0 +1,58 @@
+
+
+{% extends "base.html" %}
+
+{% block title %}Translation{% endblock %}
+
+{% block content %}
+
+<div class="chat-wrapper">
+    <div id="chat-container" class="chat-container">
+        {% if user.is_authenticated %}
+            {% for message in messages %}
+                <div class="message {{ message.role }}">
+                    {{ message.content }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+
+    <form id="generate-form" class="input-container">
+        <textarea name="message" rows="2" placeholder="문장을 입력하세요"></textarea>
+        <button type="submit">전송</button>
+    </form>
+</div>
+
+<script>
+    const form = document.getElementById("generate-form");
+    const chatContainer = document.getElementById("chat-container");
+
+    function appendMessage(text, sender) {
+        const div = document.createElement("div");
+        div.className = `message ${sender}`;
+        div.innerText = text;
+        chatContainer.appendChild(div);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    form.addEventListener("submit", async function(e) {
+        e.preventDefault();
+        const text = this.message.value.trim();
+        if (!text) return;
+
+        appendMessage(text, "user");
+        this.message.value = "";
+
+        const res = await fetch("/api/generate/", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ message: text })
+        });
+
+        const data = await res.json();
+        appendMessage(data.reply || data.error, "ai");
+    });
+</script>
+
+{% endblock %}
