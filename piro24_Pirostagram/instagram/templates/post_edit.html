@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}게시물 수정{% endblock %}
+
+{% block content %}
+
+<div class="edit-post-page">
+  <h2 class="edit-post-title">게시물 수정</h2>
+
+  <form method="post" enctype="multipart/form-data" class="edit-post-form">
+    {% csrf_token %}
+
+    <!-- 사진 미리보기 -->
+    <div class="preview-section">
+      <div id="preview-container" class="preview-container">
+        <img id="preview-image" src="{{ post.image.url }}" alt="Post image" class="preview-image">
+      </div>
+
+      <label class="form-label">
+        사진 변경 (선택사항)
+      </label>
+
+      <input
+        type="file"
+        name="image"
+        accept="image/*"
+        onchange="previewImage(event)"
+        class="file-input"
+      >
+
+      <p class="help-text">
+        새 사진을 선택하면 기존 사진이 변경됩니다.
+      </p>
+    </div>
+
+    <!-- 내용 수정 -->
+    <div class="form-section">
+      <label class="form-label">
+        내용
+      </label>
+
+      <textarea name="content" class="content-textarea">{{ post.content }}</textarea>
+    </div>
+
+    <!-- 버튼 -->
+    <div class="action-row">
+      <button type="submit" class="btn-primary">
+        수정 완료
+      </button>
+
+      <a href="{% url 'instagram:myprofile' %}" class="btn-secondary">
+        취소
+      </a>
+    </div>
+  </form>
+</div>
+
+<script>
+function previewImage(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('preview-image').src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+}
+</script>
+
+{% endblock %}

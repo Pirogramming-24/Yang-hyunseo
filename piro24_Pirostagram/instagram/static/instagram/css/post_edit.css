@@ -1,0 +1,110 @@
+/* Layout */
+.edit-post-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.edit-post-title {
+  margin-top: 0;
+}
+
+/* Form card */
+.edit-post-form {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+/* Preview */
+.preview-section {
+  margin-bottom: 20px;
+}
+
+.preview-container {
+  margin-bottom: 12px;
+}
+
+.preview-image {
+  width: 100%;
+  border-radius: 8px;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+/* Fields */
+.form-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.file-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.help-text {
+  font-size: 12px;
+  color: #999;
+  margin-top: 4px;
+}
+
+.form-section {
+  margin-bottom: 15px;
+}
+
+.content-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Actions */
+.action-row {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-primary {
+  flex: 1;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #c8c7b4;
+  color: #fff;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  background: #eee;
+  color: #333;
+  text-align: center;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-secondary:hover {
+  opacity: 0.9;
+}

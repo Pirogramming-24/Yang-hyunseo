@@ -1,0 +1,13 @@
+# Web
+Django==5.2.4
+django-allauth==65.10.0
+
+# Env (둘 중 하나만 쓰세요)
+python-dotenv==1.1.1
+# django-environ==0.12.0
+
+# DB
+psycopg2-binary==2.9.10
+pgvector==0.4.1
+
+Pillow

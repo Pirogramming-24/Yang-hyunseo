@@ -1,0 +1,126 @@
+/* Layout */
+.user-search-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.user-search-title {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+/* Search form */
+.search-form {
+  margin-bottom: 30px;
+}
+
+.search-row {
+  display: flex;
+  gap: 10px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.search-btn {
+  padding: 12px 20px;
+  background-color: #c8c7b4;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.search-btn:hover {
+  opacity: 0.9;
+}
+
+/* Results */
+.result-summary {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.result-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.user-card {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user-name {
+  margin: 0 0 4px 0;
+  font-weight: 600;
+  font-size: 15px;
+  color: #333;
+}
+
+.user-sub {
+  margin: 0;
+  font-size: 13px;
+  color: #999;
+}
+
+.user-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-profile {
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  color: #333;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-follow {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+}
+
+.btn-follow.is-following {
+  background-color: #0095f6;
+}
+
+.btn-follow.is-not-following {
+  background-color: #c8c7b4;
+}
+
+/* Empty / 안내 */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #999;
+}
+
+.empty-state-text {
+  font-size: 15px;
+  margin: 0;
+}

@@ -1,0 +1,324 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ user.username }}의 프로필{% endblock %}
+
+{% block content %}
+
+<div class="profile-page">
+  <!-- 프로필 섹션 -->
+  <div class="profile-card">
+    <!-- 아바타 -->
+    <div class="profile-avatar-wrap">
+      {% if user.profile.avatar %}
+        <img src="{{ user.profile.avatar.url }}" alt="avatar" class="profile-avatar-img">
+      {% else %}
+        <div class="profile-avatar-placeholder">
+          👤
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- 사용자 정보 -->
+    <h2 class="profile-username">
+      {{ user.username }}
+    </h2>
+
+    <p class="profile-displayname">
+      {% if user.profile.display_name %}
+        {{ user.profile.display_name }}
+      {% else %}
+        닉네임 없음
+      {% endif %}
+    </p>
+
+    <!-- 자기소개 -->
+    {% if user.profile.bio %}
+      <p class="profile-bio">
+        {{ user.profile.bio }}
+      </p>
+    {% endif %}
+
+    <!-- 게시물 수 -->
+    <div class="profile-stats">
+      <div class="profile-stat">
+        <p class="profile-stat-label">게시물</p>
+        <p class="profile-stat-value">{{ posts.count }}</p>
+      </div>
+      <div class="profile-stat">
+        <p class="profile-stat-label">팔로워</p>
+        <p class="profile-stat-value">{{ user.follower_relations.count }}</p>
+      </div>
+      <div class="profile-stat">
+        <p class="profile-stat-label">팔로잉</p>
+        <p class="profile-stat-value">{{ user.following_relations.count }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 게시물 섹션 -->
+  <div>
+    <h3 class="posts-section-title">내 게시물</h3>
+
+    {% if posts %}
+      <div class="posts-list">
+        {% for post in posts %}
+          <div class="post-card">
+            <!-- 사진 -->
+            <div class="post-image-wrap">
+              <img src="{{ post.image.url }}" alt="Post image" class="post-image">
+            </div>
+
+            <!-- 콘텐츠 + 수정/삭제 버튼 -->
+            <div class="post-body">
+              <div class="post-header-row">
+                <p class="post-content">
+                  {{ post.content }}
+                </p>
+
+                <!-- 수정/삭제 버튼 -->
+                <div class="post-actions">
+                  <a href="{% url 'instagram:post_edit' post.id %}" class="post-action-edit">
+                    수정
+                  </a>
+                  <button onclick="deletePost({{ post.id }})" class="post-action-delete">
+                    삭제
+                  </button>
+                </div>
+              </div>
+
+              <!-- 업로드 시간 -->
+              <div class="post-time">
+                {{ post.created_at|date:"Y년 m월 d일 H:i" }}
+              </div>
+
+              <!-- 좋아요 버튼 -->
+              <div class="like-row">
+                <button
+                  class="like-btn"
+                  data-post-id="{{ post.id }}"
+                  data-is-liked="{% if request.user in post.likes.all %}true{% else %}false{% endif %}"
+                  onclick="toggleLike({{ post.id }}, this)"
+                >
+                </button>
+                <span class="like-count">
+                  {{ post.likes.count }}
+                </span>
+              </div>
+
+              <!-- 댓글 섹션 -->
+              <div class="comments-section">
+                <!-- 댓글 목록 -->
+                <div class="comments-list" data-post-id="{{ post.id }}">
+                  {% for comment in post.comments.all %}
+                    <div class="comment-item" data-comment-id="{{ comment.id }}">
+                      <div class="comment-row">
+                        <div>
+                          <span class="comment-author">{{ comment.author.username }}</span>
+                          <span class="comment-content">{{ comment.content }}</span>
+                        </div>
+
+                        {% if comment.author == request.user %}
+                          <button onclick="deleteComment({{ comment.id }})" class="comment-delete-btn">
+                            삭제
+                          </button>
+                        {% endif %}
+                      </div>
+
+                      <div class="comment-time">
+                        {{ comment.created_at|date:"m월 d일 H:i" }}
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+
+                <!-- 댓글 작성 -->
+                <form onsubmit="addComment({{ post.id }}, event)" class="comment-form">
+                  <input
+                    type="text"
+                    placeholder="댓글을 입력하세요..."
+                    class="comment-input"
+                    required
+                  />
+                  <button type="submit" class="comment-submit-btn">
+                    등록
+                  </button>
+                </form>
+              </div>
+
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <p class="empty-state-title">아직 게시물이 없습니다.</p>
+        <p class="empty-state-subtitle">
+          <a href="{% url 'instagram:make_post' %}" class="empty-state-link">
+            첫 게시물을 작성해보세요!
+          </a>
+        </p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+function updateLikeButtonStyle(button) {
+  const isLiked = button.getAttribute('data-is-liked') === 'true';
+
+  if (isLiked) {
+    button.textContent = '❤️ 좋아요 취소';
+    button.style.backgroundColor = '#ff3b30';
+    button.style.color = 'white';
+  } else {
+    button.textContent = '🤍 좋아요';
+    button.style.backgroundColor = '#f0f0f0';
+    button.style.color = '#333';
+  }
+}
+
+function toggleLike(postId, button) {
+  const csrftoken = getCookie('csrftoken');
+
+  fetch(`/posts/${postId}/like/`, {
+    method: 'POST',
+    headers: {
+      'X-CSRFToken': csrftoken,
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    const likesCountSpan = button.nextElementSibling;
+    likesCountSpan.textContent = data.likes_count;
+
+    button.setAttribute('data-is-liked', data.is_liked ? 'true' : 'false');
+    updateLikeButtonStyle(button);
+  })
+  .catch(error => console.error('Error:', error));
+}
+
+function deletePost(postId) {
+  if (!confirm('정말 삭제하시겠습니까?')) {
+    return;
+  }
+
+  const csrftoken = getCookie('csrftoken');
+
+  fetch(`/posts/${postId}/delete/`, {
+    method: 'POST',
+    headers: {
+      'X-CSRFToken': csrftoken,
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert('게시물이 삭제되었습니다.');
+      location.reload();
+    }
+  })
+  .catch(error => console.error('Error:', error));
+}
+
+function addComment(postId, event) {
+  event.preventDefault();
+
+  const form = event.target;
+  const input = form.querySelector('input[type="text"]');
+  const content = input.value.trim();
+
+  if (!content) {
+    alert('댓글을 입력해주세요.');
+    return;
+  }
+
+  const csrftoken = getCookie('csrftoken');
+  const formData = new FormData();
+  formData.append('content', content);
+
+  fetch(`/posts/${postId}/comments/`, {
+    method: 'POST',
+    headers: {
+      'X-CSRFToken': csrftoken
+    },
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      const commentsList = document.querySelector(`.comments-list[data-post-id="${postId}"]`);
+      const commentHtml = `
+        <div class="comment-item" data-comment-id="${data.comment.id}">
+          <div class="comment-row">
+            <div>
+              <span class="comment-author">${data.comment.author}</span>
+              <span class="comment-content">${data.comment.content}</span>
+            </div>
+            <button onclick="deleteComment(${data.comment.id})" class="comment-delete-btn">
+              삭제
+            </button>
+          </div>
+          <div class="comment-time">
+            ${data.comment.created_at}
+          </div>
+        </div>
+      `;
+      commentsList.insertAdjacentHTML('beforeend', commentHtml);
+      input.value = '';
+    } else {
+      alert('댓글 작성에 실패했습니다.');
+    }
+  })
+  .catch(error => console.error('Error:', error));
+}
+
+function deleteComment(commentId) {
+  if (!confirm('댓글을 삭제하시겠습니까?')) {
+    return;
+  }
+
+  const csrftoken = getCookie('csrftoken');
+
+  fetch(`/comments/${commentId}/delete/`, {
+    method: 'POST',
+    headers: {
+      'X-CSRFToken': csrftoken,
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      const commentItem = document.querySelector(`.comment-item[data-comment-id="${commentId}"]`);
+      commentItem.remove();
+    }
+  })
+  .catch(error => console.error('Error:', error));
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.like-btn').forEach(button => {
+    updateLikeButtonStyle(button);
+  });
+});
+</script>
+
+{% endblock %}

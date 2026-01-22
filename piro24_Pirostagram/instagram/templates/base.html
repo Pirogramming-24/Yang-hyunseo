@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}AI Service{% endblock %}</title>
+        <static>
+        <style>
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
+            .container {
+                display: flex;
+                height: 100vh;
+            }
+            /* 왼쪽 사이드바 */
+            .sidebar {
+                width: 220px;
+                background-color: #c8c7b4;
+                color: white;
+                padding: 20px;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+            }
+            .sidebar h2 {
+                margin-top: 0;
+                margin-bottom: 30px;
+                font-size: 20px;
+                text-align: center;
+            }
+            .sidebar a {
+                display: block;
+                padding: 12px;
+                margin-bottom: 10px;
+                text-decoration: none;
+                color: white;
+                background-color: #c8c7b4;
+                border-radius: 6px;
+                text-align: center;
+            }
+            .sidebar a:hover {
+                background-color: #4a4a6a;
+            }
+
+            /* 오른쪽 메인 영역 */
+            .content {
+                flex: 1;
+                padding: 40px;
+                box-sizing: border-box;
+            }
+            .auth-area {
+                margin-top: 20px;
+            }
+
+            .auth-row {
+                display: flex;
+                gap: 10px;
+            }
+
+            .auth-btn {
+                text-decoration: none;
+                color: white;
+                background-color: #c8c7b4;
+                padding: 10px;
+                border-radius: 6px;
+                text-align: center;
+                font-size: 14px;
+            }
+
+            .auth-btn:hover {
+                background-color: #5a5a8a;
+            }
+
+            .auth-btn.half {
+                flex: 1;
+            }
+
+            .auth-btn.full {
+                width: 100%;
+            }
+        </style>
+        <link rel="stylesheet" href="{% static 'instagram/css/main.css' %}">
+        <link rel="stylesheet" href="{% static 'instagram/css/login.css' %}">
+        <link rel="stylesheet" href="{% static 'instagram/css/make_post.css' %}">
+        <link rel="stylesheet" href="{% static 'instagram/css/myprofile.css' %}">
+        <link rel="stylesheet" href="{% static 'instagram/css/othersprofile.css' %}">
+        <link rel="stylesheet" href="{% static 'instagram/css/post_edit.css' %}">
+        <link rel="stylesheet" href="{% static 'instagram/css/story_detail.css' %}">
+        <link rel="stylesheet" href="{% static 'instagram/css/user_search.css' %}">
+        <script src="{% static 'instagram/js/main.js' %}"></script>
+
+    </head>
+    <body>
+        <div class="container">
+            <div class="sidebar">
+                <h2>Pirostagram</h2>
+
+                <!-- 홈 버튼 -->
+                <a href="{% url 'instagram:main' %}">홈</a>
+
+                <!-- 유저 검색: 텍스트 + 입력폼/버튼 나란히 -->
+                <div class="auth-area">
+                    <div style="margin: 8px 0 8px; font-size: 14px; color: white;">
+                        유저 검색
+                    </div>
+
+                    <form action="{% url 'instagram:user_search' %}" method="get">
+                        <div class="auth-row">
+                            <input
+                                type="text"
+                                name="q"
+                                placeholder="아이디/이름 검색"
+                                style="
+                                    flex: 1;
+                                    padding: 10px;
+                                    border-radius: 6px;
+                                    border: none;
+                                    outline: none;
+                                "
+                            />
+                            <button
+                                type="submit"
+                                class="auth-btn"
+                                style="border: none; cursor: pointer;"
+                            >
+                                검색
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 게시물 만들기 -->
+                <a href="{% url 'instagram:make_post' %}">게시물 만들기</a>
+
+                <!-- 프로필 -->
+                <a href="{% url 'instagram:myprofile' %}">프로필</a>
+                
+                <!-- 사이드바 하단: 로그인 / 로그아웃 -->
+                <div style="margin-top: auto;">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'instagram:logout' %}" class="auth-btn full" style="background: #ff3b30;">로그아웃</a>
+                    {% else %}
+                        <a href="{% url 'instagram:login' %}" class="auth-btn full" style="background: #0095f6;">로그인</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="content">
+                {% block content %}
+                {% endblock %}
+            </div>
+
+        </div>
+    </body>
+    
+
+</html>

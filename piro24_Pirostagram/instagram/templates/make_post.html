@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}게시물 만들기{% endblock %}
+
+{% block content %}
+
+<h2 class="create-post-title">게시물 만들기</h2>
+
+<form method="post" enctype="multipart/form-data" class="create-post-form">
+  {% csrf_token %}
+
+  <!-- 에러 표시 -->
+  {% if form.non_field_errors %}
+    <div class="form-error-box">
+      {{ form.non_field_errors }}
+    </div>
+  {% endif %}
+
+  <!-- 이미지 업로드 -->
+  <div class="form-section">
+    <label class="form-label">
+      사진 업로드
+    </label>
+
+    <input type="file" name="image" accept="image/*" required class="file-input">
+
+    {% if form.image.errors %}
+      <div class="field-error">
+        {{ form.image.errors }}
+      </div>
+    {% endif %}
+
+    <div class="form-help-text">
+      JPG, PNG 등의 이미지 파일을 선택해주세요.
+    </div>
+  </div>
+
+  <!-- content 입력 -->
+  <div class="form-section">
+    <label class="form-label">
+      내용
+    </label>
+
+    {{ form.content }}
+
+    {% if form.content.errors %}
+      <div class="field-error">
+        {{ form.content.errors }}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="action-row">
+    <button type="submit" class="btn-primary">
+      올리기
+    </button>
+
+    <a href="{% url 'instagram:main' %}" class="btn-cancel">
+      취소
+    </a>
+  </div>
+</form>
+
+{% endblock %}
