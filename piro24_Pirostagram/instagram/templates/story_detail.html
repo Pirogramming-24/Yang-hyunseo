@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ target_user.username }}의 스토리{% endblock %}
+
+{% block content %}
+
+<div class="story-page">
+  <!-- 헤더 -->
+  <div class="story-header">
+    <div class="story-header-left">
+      {% if target_user.profile.avatar %}
+        <img src="{{ target_user.profile.avatar.url }}" alt="avatar" class="story-avatar-img">
+      {% else %}
+        <div class="story-avatar-placeholder">👤</div>
+      {% endif %}
+
+      <div class="story-user-meta">
+        <p class="story-username">{{ target_user.username }}</p>
+        <p class="story-time">
+          {% if stories %}{{ stories.0.created_at|date:"H:i" }}{% endif %}
+        </p>
+      </div>
+    </div>
+
+    <a href="{% url 'instagram:main' %}" class="story-close">✕</a>
+  </div>
+
+  <!-- 스토리 콘텐츠 -->
+  <div class="story-content">
+    {% if stories %}
+      <div id="story-viewer" class="story-viewer">
+        {% for story in stories %}
+          <div class="story-frame" data-story-id="{{ story.id }}">
+            {% for item in story.items.all %}
+              <img src="{{ item.image.url }}" alt="Story" class="story-image">
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- 진행률 바 -->
+      <div class="story-progress">
+        {% for story in stories %}
+          <div class="progress-bar" data-story-id="{{ story.id }}"></div>
+        {% endfor %}
+      </div>
+
+      <!-- 네비게이션 버튼 -->
+      <button onclick="previousStory()" class="story-nav-btn story-nav-prev">
+        ‹
+      </button>
+
+      <button onclick="nextStory()" class="story-nav-btn story-nav-next">
+        ›
+      </button>
+    {% else %}
+      <div class="story-empty">
+        <p class="story-empty-title">스토리가 없습니다.</p>
+        <a href="{% url 'instagram:main' %}" class="story-empty-link">
+          돌아가기
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+let currentStoryIndex = 0;
+const totalStories = {{ stories.count }};
+
+function showStory(index) {
+  const frames = document.querySelectorAll('.story-frame');
+  const bars = document.querySelectorAll('.progress-bar');
+
+  // 초기화
+  frames.forEach(frame => frame.style.display = 'none');
+  bars.forEach(bar => bar.classList.remove('is-active'));
+
+  // 현재 표시
+  if (frames[index]) {
+    frames[index].style.display = 'block';
+    if (bars[index]) bars[index].classList.add('is-active');
+    currentStoryIndex = index;
+  }
+}
+
+function nextStory() {
+  if (currentStoryIndex < totalStories - 1) {
+    showStory(currentStoryIndex + 1);
+  }
+}
+
+function previousStory() {
+  if (currentStoryIndex > 0) {
+    showStory(currentStoryIndex - 1);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (totalStories > 0) showStory(0);
+
+  // 키보드 네비게이션
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight') nextStory();
+    if (e.key === 'ArrowLeft') previousStory();
+  });
+});
+</script>
+
+{% endblock %}

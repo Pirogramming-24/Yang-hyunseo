@@ -1,0 +1,38 @@
+.login-wrapper {
+  max-width: 400px;
+  margin: auto;
+}
+
+.login-title {
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.error-message {
+  color: #b00020;
+  margin-bottom: 10px;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 10px;
+  background: #c8c7b4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  opacity: 0.9;
+}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}로그인{% endblock %}
+
+{% block content %}
+
+
+<div class="login-wrapper">
+
+  <h2 class="login-title">로그인</h2>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <input
+        type="text"
+        name="username"
+        placeholder="아이디"
+        required
+        class="input-field"
+      >
+    </div>
+
+    <div class="form-group">
+      <input
+        type="password"
+        name="password"
+        placeholder="비밀번호"
+        required
+        class="input-field"
+      >
+    </div>
+
+    {% if error %}
+      <div class="error-message">
+        {{ error }}
+      </div>
+    {% endif %}
+
+    <button type="submit" class="login-btn">
+      로그인
+    </button>
+  </form>
+
+</div>
+
+{% endblock %}

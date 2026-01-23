@@ -1,2 +1,14 @@
+# mac
 .DS_Store
-MovieChatBot/.env
+
+# env files (비밀키)
+.env
+*.env
+
+# virtual environment
+venv/
+.venv/
+
+# python cache
+__pycache__/
+*.pyc

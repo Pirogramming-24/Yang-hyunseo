@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}AI Service{% endblock %}</title>
+        <style>
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
+            .container {
+                display: flex;
+                height: 100vh;
+            }
+            /* 왼쪽 사이드바 */
+            .sidebar {
+                width: 220px;
+                background-color: #1e1e2f;
+                color: white;
+                padding: 20px;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+            }
+            .sidebar h2 {
+                margin-top: 0;
+                margin-bottom: 30px;
+                font-size: 20px;
+                text-align: center;
+            }
+            .sidebar a {
+                display: block;
+                padding: 12px;
+                margin-bottom: 10px;
+                text-decoration: none;
+                color: white;
+                background-color: #2e2e42;
+                border-radius: 6px;
+                text-align: center;
+            }
+            .sidebar a:hover {
+                background-color: #4a4a6a;
+            }
+
+            /* 오른쪽 메인 영역 */
+            .content {
+                flex: 1;
+                padding: 40px;
+                box-sizing: border-box;
+            }
+            .auth-area {
+                margin-top: 20px;
+            }
+
+            .auth-row {
+                display: flex;
+                gap: 10px;
+            }
+
+            .auth-btn {
+                text-decoration: none;
+                color: white;
+                background-color: #3a3a5a;
+                padding: 10px;
+                border-radius: 6px;
+                text-align: center;
+                font-size: 14px;
+            }
+
+            .auth-btn:hover {
+                background-color: #5a5a8a;
+            }
+
+            .auth-btn.half {
+                flex: 1;
+            }
+
+            .auth-btn.full {
+                width: 100%;
+            }
+        </style>
+        <link rel="stylesheet" href="{% static 'my_ai/css/chat.css' %}">
+        <link rel="stylesheet" href="{% static 'my_ai/css/style.css' %}">
+        
+
+    </head>
+    <body>
+        <div class="container">
+            <div class="sidebar">
+                <h2><a href="{% url 'main' %}">AI Models</a></h2>
+
+                <a href="{% url 'translate' %}">Translate</a>
+                <a href="#" onclick="goGenerate()">Generate</a>
+                <a href="#" onclick="goSentiment()">Sentiment</a>
+
+                <!-- 아래쪽 여백 밀기 -->
+                <div style="flex-grow: 1;"></div>
+
+                <!-- 로그인 / 로그아웃 영역 -->
+                <div class="auth-area">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'logout' %}" class="auth-btn full">로그아웃</a>
+                    {% else %}
+                        <div class="auth-row">
+                            <a href="{% url 'login' %}" class="auth-btn half">로그인</a>
+                            <a href="{% url 'signup' %}" class="auth-btn half">회원가입</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="content">
+                {% block content %}
+                {% endblock %}
+            </div>
+
+        </div>
+    </body>
+    <script>
+        function requireLogin(targetUrl) {
+            alert("해당 기능을 사용하려면 로그인을 하세요");
+            window.location.href = "/login/?next=" + targetUrl;
+        }
+
+        function goGenerate() {
+            {% if user.is_authenticated %}
+                window.location.href = "{% url 'generate' %}";
+            {% else %}
+                requireLogin("{% url 'generate' %}");
+            {% endif %}
+        }
+
+        function goSentiment() {
+            {% if user.is_authenticated %}
+                window.location.href = "{% url 'sentiment' %}";
+            {% else %}
+                requireLogin("{% url 'sentiment' %}");
+            {% endif %}
+        }
+    </script>
+
+</html>
